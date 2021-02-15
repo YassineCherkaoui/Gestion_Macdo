@@ -33,8 +33,27 @@ router.route("/add").post((req, res) => {
       res.redirect('/category')
   });
 
-
+// Remove categorie
+router.delete('/delete/:id', async (req, res, next)=>{
+  try {
+      const deleteCategory = await Category.remove({_id:req.params._id});
+      res.json(deleteCategory);
+  } catch (err) {
+      res.json({message:err});
+  }
+});
   
+// Update categorie 
+router.patch('/update/:id', async (req, res, next)=>{
+  try {
+      const updateCategorie = await Category.updateOne(
+          {_id: req.params._id},
+          {$set:{nom:req.body.categorie_name}});
+      res.json(updateCategorie);
+  } catch (err) {
+      res.json({message:err});
+  }
+});
 
 
 module.exports = router;

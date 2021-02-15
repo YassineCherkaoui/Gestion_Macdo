@@ -137,7 +137,7 @@ class UI {
         
         
         <div class="product">
-        <div class="card" style="width: 30%; align-items: center;">
+        <div class="card" style="width: 100%;text-align: center;align-items: center;">
         <img class="card-img-top" src="images/${picname}.png" alt="Card image cap" style="
         width: 37%;
     ">
@@ -148,22 +148,15 @@ class UI {
       </div>
       </div>
       <span class="increase" data-id=${_id}>
-      <svg>
-        <use xlink:href="./images/sprite.svg#icon-angle-up"></use>
-      </svg>
+
     </span>
-    <p class="item__amount">1</p>
     <span class="decrease" data-id=${_id}>
-      <svg>
-        <use xlink:href="images/sprite.svg#icon-angle-down"></use>
-      </svg>
+
     </span>
   </div>
 
     <span class="remove__item" data-id=${_id}>
-      <svg>
-        <use xlink:href="images/sprite.svg#icon-trash"></use>
-      </svg>
+
     </span>
         
         
@@ -306,7 +299,7 @@ document.addEventListener("DOMContentLoaded", async() => {
 
 
 
-//___________code Promo ____________________________
+//sdfsdfsdf
 
 
 serviceTable =document.getElementById('serviceTable');

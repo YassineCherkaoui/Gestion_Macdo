@@ -15,7 +15,9 @@ app.use(cors());
 
 
 // parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.urlencoded({
+  extended: true
+}))
 
 // parse requests of content-type - application/json
 app.use(bodyParser.json())
@@ -25,10 +27,10 @@ app.use(express.static(__dirname + 'views'));
 
 
 
-mongoose.connect('mongodb://localhost:27017/SnackDelice' , {
+mongoose.connect('mongodb://localhost:27017/SnackDelice', {
   useNewUrlParser: true
 }).then(() => {
-  logger.info("Successfully connected to the database");    
+  logger.info("Successfully connected to the database");
 }).catch(err => {
   logger.error('Could not connect to the database. Exiting now...', err);
   process.exit();
@@ -46,12 +48,12 @@ const codepromoRoute = require('./routes/codepromo');
 const tableRoute = require('./routes/table');
 const pointFideliteRoute = require('./routes/pointFidelite');
 
-app.use('/category' ,categoryRoute);
-app.use('/sousCategory' ,sousCategoryRoute);
-app.use('/product' ,productRoute);
-app.use('/Codepromo' ,codepromoRoute);
-app.use('/table' ,tableRoute);
-app.use('/pointFidelite' ,pointFideliteRoute);
+app.use('/category', categoryRoute);
+app.use('/sousCategory', sousCategoryRoute);
+app.use('/product', productRoute);
+app.use('/Codepromo', codepromoRoute);
+app.use('/table', tableRoute);
+app.use('/pointFidelite', pointFideliteRoute);
 
 
 

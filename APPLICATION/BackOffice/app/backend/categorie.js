@@ -7,7 +7,6 @@ $(function () {
         success: function (getCategory) {
             $.each(getCategory, function (i, categoryRow) {
                 $getCategory.append(`<tr>
-        <td id="catName"> ${categoryRow._id}</td>
         <td id="catName"> ${categoryRow.nom}</td>
         <td class="text-center py-0 align-middle">
             <div class="btn-group btn-group-sm">
@@ -39,14 +38,7 @@ $('#add_categrie').on('click', function (e) {
                 nom: $categoryName.val()
             },
             success: function () {
-                Swal.fire({
-                    position: 'top-end',
-                    icon: 'success',
-                    title: 'Categorie has been saved',
-                    showConfirmButton: false,
-                }).then(function () {
-                    location.reload();
-                });
+                location.reload();
             },
             timeout: 1000
         })
@@ -59,15 +51,7 @@ function deleteCategory(_id) {
         method: 'DELETE',
         url: 'http://localhost:8080/category/delete/' + _id,
         success: function () {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'Categorie has been deleted',
-                showConfirmButton: false,
-                timer: 1500
-            }).then(function () {
-                location.reload();
-            });
+            location.reload();
         },
         timeout: 1000
     })
@@ -75,11 +59,15 @@ function deleteCategory(_id) {
 
 // update category 
 function updateCategory(_id) {
+    var $nom = $('#categorie_name');
     $.ajax({
-        method: 'PATCH',
+        method: 'PUT',
         url: 'http://localhost:8080/category/update/' + _id,
+        data: {
+            nom: $nom.val()
+        },
         success: function (data) {
-            $('#categorie_name').val(data.$categoryName);
+
             location.reload();
         }
     })

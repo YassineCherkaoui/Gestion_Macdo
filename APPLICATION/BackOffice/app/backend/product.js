@@ -16,11 +16,10 @@ $(function () {
             <td>${prodRow.ingrediens}</td>
             <td>${prodRow.codePromo}</td>
             <td>${prodRow.points}</td>
-            <td>${prodRow.sousCategory}</td>
             <td class="text-center py-0 align-middle">
                 <div class="btn-group btn-group-sm">
-                    <a href="#" class="btn btn-info"><i class="fa fa-edit"></i></a>
-                    <a href="#" class="btn btn-danger text-white" onclick="deleteProd('${prodRow._id}')"><i class="fa fa-trash"></i></a>
+                <a type="button" onclick="updateProduct('${prodRow._id}')" class="btn btn-primary">Edite</a>
+                <a type="button" onclick="deleteProduct('${prodRow._id}')" class="btn btn-danger text-white">Delete</a>
                 </div>
             </td>
         </tr>
@@ -71,28 +70,22 @@ $('#add_product').on('click', function (e) {
         e.preventDefault();
         $productName.addClass('is-invalid');
 
-    }
-     else if ($productPrice.val()=="") {
+    } else if ($productPrice.val() == "") {
         e.preventDefault();
         $productPrice.addClass('is-invalid');
-    }
-    else if ($ingrediens.val()=="") {
+    } else if ($ingrediens.val() == "") {
         e.preventDefault();
         $ingrediens.addClass('is-invalid');
-    }
-    else if ($tablecodepromo.val()=="") {
+    } else if ($tablecodepromo.val() == "") {
         e.preventDefault();
         $tablecodepromo.addClass('is-invalid');
-    }
-    else if ($productpicname.val()=="") {
+    } else if ($productpicname.val() == "") {
         e.preventDefault();
         $productpicname.addClass('is-invalid');
-    }
-    else if ($sousCategID.val()=="") {
+    } else if ($sousCategID.val() == "") {
         e.preventDefault();
         $sousCategID.addClass('is-invalid');
-    }else
-    {
+    } else {
 
         $.post({
             method: 'POST',
@@ -121,19 +114,41 @@ $('#add_product').on('click', function (e) {
 });
 
 // DELETE PRODUCT
-function deleteProd(id) {
+function deleteProduct(id) {
     $.ajax({
         method: 'DELETE',
         url: 'http://localhost:8080/product/delete/' + id,
         success: function () {
-            Swal.fire({
-                icon: 'success',
-                title: '<span style="color:#e0a800">Product has been deleted<span>',
-                showConfirmButton: false,
-                timer: 1500
-            }).then(function () {
-                location.reload();
-            });
+            location.reload();
+        },
+        timeout: 1000
+    })
+}
+
+
+// __________________________ update Product  ___________________________
+function updateProduct(_id) {
+    var $nom = $('#productName');
+    var $prix = $('#productPrice');
+    var $ingrediens = $('#ingrediens');
+    var $picname = $('#productpicname');
+    var $codePromo = $('#tablecodepromo');
+    var $sousCategory = $('#sousCategID');
+
+    $.ajax({
+        method: 'PUT',
+        url: 'http://localhost:8080/product/update/' + _id,
+        data: {
+            nom: $nom.val(),
+            prix: $prix.val(),
+            ingrediens: $ingrediens.val(),
+            picname: $picname.val(),
+            codePromo: $codePromo.val(),
+            sousCategory: $sousCategory.val()
+        },
+        success: function (data) {
+
+            location.reload();
         }
     })
 }

@@ -6,12 +6,12 @@ const Product = new Schema({
     nom: {
         type: String,
         required: true,
-       
+
     },
     prix: {
         type: Number,
         required: true,
-       
+
     },
     ingrediens: {
         type: String,
@@ -25,12 +25,12 @@ const Product = new Schema({
     points: {
         type: Number,
         required: true,
-      
+
     },
     codePromo: {
         type: String,
         required: true,
-      
+
     },
     sousCategory: {
         type: mongoose.Schema.Types.ObjectId,

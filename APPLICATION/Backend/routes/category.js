@@ -1,59 +1,78 @@
+// ____________________________Call Required______________________________________________
 const express = require('express')
 let Category = require('../models/category.model');
 const router = express.Router();
+const bodyParser = require('body-parser');
+// middleware
+router.use(bodyParser.json());
 
-// show all category 
-
-
-router.get('/', (req,res) =>{
-  
+// ____________________________show all CATEGORIE__________________________________________
+router.get('/', (req, res) => {
   Category.find()
-  .then((category) => res.json(category))
-  .catch((err) => res.status(400).json("Error :" + err));
-//   res.render('index', {
-                  
-    
-//  });
-
+    .then((category) => res.json(category))
+    .catch((err) => res.status(400).json("Error :" + err));
 });
 
+// ____________________________FIND DATA CATEGORIE BY ID____________________________________
+router.get('/:id', async (req, res, next) => {
+  try {
+    const Category = await Category.findById(req.params.id);
+    res.json(Category);
+  } catch (err) {
+    res.json({
+      message: err
+    });
+  }
+});
 
-// add category
-
+// ____________________________add Category____________________________________
 router.route("/add").post((req, res) => {
   const nom = req.body.nom;
-    const categoryPush = new Category({
-      nom
-    });
-  
-    categoryPush
-      .save()
-      .then(() => res.json("Category successfully added"))
-      .catch((err) =>  res.status(400).json("Error :" + err));
-      res.redirect('/category')
+  const categoryPush = new Category({
+    nom
   });
+  categoryPush
+    .save()
+    .then(() => res.json("Category successfully added"))
+    .catch((err) => res.status(400).json("Error :" + err));
+  res.redirect('/category')
+});
 
-// Remove categorie
-router.delete('/delete/:id', async (req, res, next)=>{
+// ____________________________DELETE categorie___________________________________
+router.delete('/delete/:_id', async (req, res, next) => {
   try {
-      const deleteCategory = await Category.remove({_id:req.params._id});
-      res.json(deleteCategory);
+    const category = await Category.remove({
+      _id: req.params._id
+    });
+    res.json(category);
   } catch (err) {
-      res.json({message:err});
+    res.json({
+      message: err
+    });
   }
 });
-  
-// Update categorie 
-router.patch('/update/:id', async (req, res, next)=>{
+
+// ____________________________UPDATE categorie___________________________________
+router.put('/update/:id', async (req, res, next) => {
   try {
-      const updateCategorie = await Category.updateOne(
-          {_id: req.params._id},
-          {$set:{nom:req.body.categorie_name}});
-      res.json(updateCategorie);
+    const updateCategorie = await Category.updateOne({
+      _id: req.params.id
+    }, {
+      $set: {
+        nom: req.body.nom
+      }
+    });
+    res.json(updateCategorie);
   } catch (err) {
-      res.json({message:err});
+    res.json({
+      message: err
+    });
   }
 });
+
+
+
+
 
 
 module.exports = router;
